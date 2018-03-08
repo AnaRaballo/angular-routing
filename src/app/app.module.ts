@@ -13,11 +13,16 @@ import { ContactComponent} from './contact/contact.component';
 import { ContactOverviewComponent } from './contact-overview/contact-overview.component';
 import { ContactEditComponent } from './contact-edit/contact-edit.component'
 
+import { FormsModule } from '@angular/forms'
+
 const routes: Routes = [
   { path: '', component: ContactListComponent },
-  { path: 'contact/:id', component: ContactComponent},
-  { path: 'home',  component: MyHomeComponent },
-  { path: 'about', component: MyAboutComponent }
+  { path: 'contact/:id', component: ContactComponent,
+    children: [
+      { path: '', component: ContactOverviewComponent },
+      { path: 'edit', component: ContactEditComponent }
+    ]
+  }
 ];
 
 
@@ -33,7 +38,8 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

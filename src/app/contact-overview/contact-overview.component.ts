@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ContactService } from '../services/contact-service'
 
 @Component({
   selector: 'app-contact-overview',
@@ -6,10 +8,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact-overview.component.css']
 })
 export class ContactOverviewComponent implements OnInit {
+contact: any;
+optionalParameter: string;
 
-  constructor() { }
+  constructor(
+    private route : ActivatedRoute,
+    private contactService: ContactService
+  ) { }
 
   ngOnInit() {
-  }
+    this.route.params
+    .subscribe((params) => {
+      this.contact = this.contactService.get(+params['id']);
+  });
+
+  this.route.queryParams
+    .subscribe((queryParams) => {
+      this.optionalParameter = queryParams['foo'];
+  });
+}
 
 }
